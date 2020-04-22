@@ -1,8 +1,6 @@
 module Enumerable
   # my_each
   def my_each
-    return my_each.dup unless block_given?
-
     each do |item|
       yield(item)
     end
@@ -10,8 +8,6 @@ module Enumerable
 
   # my_each_with_index
   def my_each_with_index
-    return my_each_with_index.dup unless block_given?
-
     i = 0
     each do |item|
       yield(item[i], i)
@@ -21,8 +17,6 @@ module Enumerable
 
   # my_select
   def my_select
-    return my_select.dup unless block_given?
-
     result = []
     my_each do |item|
       result << item if yield(item)
@@ -41,8 +35,6 @@ module Enumerable
 
   # my_any?
   def my_any?
-    return dup unless block_given?
-
     result = false
     my_each do |item|
       result = true if yield(item)
@@ -52,8 +44,6 @@ module Enumerable
 
   # my_none?
   def my_none?
-    return dup unless block_given?
-
     result = true
     my_each do |item|
       result = false if yield(item)
@@ -74,8 +64,6 @@ module Enumerable
 
   # my_map
   def my_map(&proc)
-    return self unless block_given?
-
     result = []
     my_each do |item|
       if block_given?
