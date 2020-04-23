@@ -1,4 +1,3 @@
-<<<<<<< feature_branch
 # Enumerable-Methods
 
 ## About The Project
@@ -49,4 +48,4 @@ Give a ⭐️ if you like this project!
 
 =======
 # Enumerable-Methods
->>>>>>> development
+
