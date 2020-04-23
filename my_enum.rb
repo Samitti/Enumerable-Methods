@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-module Enumerable # rubocop:disable Style/Documentation
+module Enumerable
   # my_each
   def my_each
     each do |item|
@@ -29,11 +27,11 @@ module Enumerable # rubocop:disable Style/Documentation
   # my_all
   def my_all?(args = nil)
     if !args.nil? # obj.kind_of?(mod)
-      my_each { |x|  return false unless args === x } # rubocop:disable Style/CaseEquality
+      my_each { |x| return false unless args === x } # rubocop:disable Style/CaseEquality
     elsif !block_given?
-      my_each { |x|  return false unless x }
+      my_each { |x| return false unless x }
     else
-      my_each { |x|  return false unless yield(x) }
+      my_each { |x| return false unless yield(x) }
     end
     true
   end
