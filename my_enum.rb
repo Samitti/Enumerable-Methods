@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Enumerable
+module Enumerable # rubocop:disable Style/Documentation
   # my_each
   def my_each
     each do |item|
@@ -28,8 +28,8 @@ module Enumerable
 
   # my_all
   def my_all?(args = nil)
-    if !args.nil?
-      my_each { |x|  return false unless args === x } # obj.kind_of?(mod)
+    if !args.nil? # obj.kind_of?(mod)
+      my_each { |x|  return false unless args === x } # rubocop:disable Style/CaseEquality
     elsif !block_given?
       my_each { |x|  return false unless x }
     else
@@ -42,7 +42,7 @@ module Enumerable
   def my_any?(args = nil)
     result = false
     if !args.nil?
-      my_each { |x| result = true if args === x } # obj.kind_of?(mod)
+      my_each { |x| result = true if args === x } # rubocop:disable Style/CaseEquality
     elsif !block_given?
       my_each { |x| result = true if x }
     else
@@ -55,7 +55,7 @@ module Enumerable
   def my_none?(args = nil)
     result = true
     if !args.nil?
-      my_each { |x| result = false if args === x } # obj.kind_of?(mod)
+      my_each { |x| result = false if args === x } # rubocop:disable Style/CaseEquality
     elsif !block_given?
       my_each { |x| result = false if x }
     else
@@ -84,7 +84,7 @@ module Enumerable
       if block_given?
         result << item if yield(item)
       else
-        result << item if proc.call(item)
+        result << item if proc.call(item) # rubocop:disable Style/IfInsideElse
       end
     end
     result
@@ -104,7 +104,7 @@ module Enumerable
   end
 end
 
-#multiply_els
+# multiply_els
 def multiply_els(arr)
-  return arr.my_inject { |total, z| total * z }
+  arr.my_inject { |total, z| total * z }
 end
