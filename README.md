@@ -46,6 +46,3 @@ Feel free to check the [issues page](https://github.com/Samitti/Enumerable-Metho
 
 Give a ⭐️ if you like this project!
 
-=======
-# Enumerable-Methods
-
