@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Enumerable
   # my_each
   def my_each
@@ -10,7 +12,7 @@ module Enumerable
   def my_each_with_index
     i = 0
     each do |item|
-      yield(item[i], i)
+      yield(item, i)
       i += 1
     end
   end
@@ -25,19 +27,26 @@ module Enumerable
   end
 
   # my_all
-  def my_all1?(*_args)
-    my_each do |x|
-      return true unless block_given?
-      return false unless yield(x)
+  def my_all?(args = nil)
+    if !args.nil?
+      my_each { |x|  return false unless args === x } # obj.kind_of?(mod)
+    elsif !block_given?
+      my_each { |x|  return false unless x }
+    else
+      my_each { |x|  return false unless yield(x) }
     end
     true
   end
 
   # my_any?
-  def my_any?
+  def my_any?(args = nil)
     result = false
-    my_each do |item|
-      result = true if yield(item)
+    if !args.nil?
+      my_each { |x| result = true if args === x } # obj.kind_of?(mod)
+    elsif !block_given?
+      my_each { |x| result = true if x }
+    else
+      my_each { |x| result = true if yield(x) }
     end
     result
   end
@@ -52,12 +61,15 @@ module Enumerable
   end
 
   # my_count
-  def my_count
-    return length unless block_given?
+  def my_count(args = nil)
 
     result = 0
-    my_each do |item|
-      result += 1 if yield(item)
+    if !args.nil?
+      my_each { |x| result += 1 if x == args }
+    elsif !block_given?
+      return length
+    else
+      my_each { |x| result += 1 if yield(x) }
     end
     result
   end
@@ -76,11 +88,26 @@ module Enumerable
   end
 
   # my_inject
-  def my_inject
+  def my_inject(args = nil)
+    i = 0
     result = 0
-    my_each do |item|
-      result = yield(result, item)
+    couted = 0
+    if args.to_i >= 1
+      while i < args.to_i
+        my_each do |item|
+          result = yield(result, item)
+        end
+        i += 1
+      end
+    else
+      my_each do |item|
+        result = yield(result, item)
+      end
     end
     result
   end
+
+  
+  # p (5..10).my_inject1 { |sum, n| sum + n }
+
 end
