@@ -52,17 +52,20 @@ module Enumerable
   end
 
   # my_none?
-  def my_none?
+  def my_none?(args = nil)
     result = true
-    my_each do |item|
-      result = false if yield(item)
+    if !args.nil?
+      my_each { |x| result = false if args === x } # obj.kind_of?(mod)
+    elsif !block_given?
+      my_each { |x| result = false if x }
+    else
+      my_each { |x| result = false if yield(x) }
     end
     result
   end
 
   # my_count
   def my_count(args = nil)
-
     result = 0
     if !args.nil?
       my_each { |x| result += 1 if x == args }
@@ -88,26 +91,20 @@ module Enumerable
   end
 
   # my_inject
-  def my_inject(args = nil)
-    i = 0
-    result = 0
-    couted = 0
-    if args.to_i >= 1
-      while i < args.to_i
-        my_each do |item|
-          result = yield(result, item)
-        end
-        i += 1
-      end
+  def my_inject(initial_value = nil, &block)
+    if initial_value.nil?
+      final_result = to_a[1..-1].my_inject(first, &block)
     else
-      my_each do |item|
-        result = yield(result, item)
+      final_result = initial_value
+      my_each do |x|
+        final_result = yield(final_result, x) if block_given?
       end
     end
-    result
+    final_result
   end
+end
 
-  
-  # p (5..10).my_inject1 { |sum, n| sum + n }
-
+#multiply_els
+def multiply_els(arr)
+  return arr.my_inject { |total, z| total * z }
 end
