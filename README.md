@@ -1,4 +1,4 @@
-<h1 align="center">Enumerable-Methods</h1>
+# Enumerable-Methods
 
 ## About The Project
 
