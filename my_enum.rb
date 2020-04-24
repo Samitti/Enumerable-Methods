@@ -103,7 +103,7 @@ module Enumerable
   end
 
   # my_inject
-  def my_inject(initial = nil, second = nil)
+  def my_inject(initial = nil, second = nil) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     sym = initial if initial.is_a?(Symbol) || initial.is_a?(String)
     result = initial if initial.is_a? Integer
 
