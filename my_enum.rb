@@ -91,6 +91,8 @@ module Enumerable
 
   # my_map
   def my_map(&proc)
+    return enum_for(:my_select) unless block_given?
+
     result = []
     my_each do |item|
       if block_given?
