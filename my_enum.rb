@@ -1,15 +1,27 @@
 module Enumerable
   # my_each
   def my_each
-    each do |item|
-      yield(item)
+    return enum_for(:my_each) unless block_given?
+
+    index = 0
+    while index < size
+      if is_a? Array
+        yield self[index]
+      elsif is_a? Hash
+        yield keys[index], self[keys[index]]
+      elsif is_a? Range
+        yield to_a[index]
+      end
+      index += 1
     end
   end
 
   # my_each_with_index
   def my_each_with_index
+    return enum_for(:my_each_with_index) unless block_given?
+
     i = 0
-    each do |item|
+    my_each do |item|
       yield(item, i)
       i += 1
     end
@@ -17,6 +29,8 @@ module Enumerable
 
   # my_select
   def my_select
+    return enum_for(:my_select) unless block_given?
+
     result = []
     my_each do |item|
       result << item if yield(item)
@@ -26,7 +40,7 @@ module Enumerable
 
   # my_all
   def my_all?(args = nil)
-    if !args.nil? # obj.kind_of?(mod)
+    if !args.nil?
       my_each { |x| return false unless args === x } # rubocop:disable Style/CaseEquality
     elsif !block_given?
       my_each { |x| return false unless x }
@@ -80,29 +94,33 @@ module Enumerable
     result = []
     my_each do |item|
       if block_given?
-        result << item if yield(item)
+        result << yield(item) ? true : false
       else
-        result << item if proc.call(item) # rubocop:disable Style/IfInsideElse
+        result << proc.call(item) ? true : false
       end
     end
     result
   end
 
   # my_inject
-  def my_inject(initial_value = nil, &block)
-    if initial_value.nil?
-      final_result = to_a[1..-1].my_inject(first, &block)
-    else
-      final_result = initial_value
-      my_each do |x|
-        final_result = yield(final_result, x) if block_given?
-      end
+  def my_inject(initial = nil, second = nil)
+    sym = initial if initial.is_a?(Symbol) || initial.is_a?(String)
+    result = initial if initial.is_a? Integer
+
+    if initial.is_a?(Integer)
+      sym = second if second.is_a?(Symbol) || second.is_a?(String)
     end
-    final_result
+
+    if sym
+      my_each { |item| result = result ? result.send(sym, item) : item }
+    elsif block_given?
+      my_each { |item| result = result ? yield(result, item) : item }
+    end
+    result
   end
 end
 
 # multiply_els
 def multiply_els(arr)
-  arr.my_inject { |total, z| total * z }
+  arr.my_inject { |result, num| result * num }
 end
