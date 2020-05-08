@@ -51,4 +51,14 @@ describe Enumerable do
           expect(mix_arr.my_all?(Integer)).to eql(false)
       end
   end
+
+  describe "#my_none?" do
+    it "returns true if each element returns false" do
+      expect(false_arr.my_none?).to eql(true)
+    end
+
+    it "returns false if one of the elements returns true" do
+      expect(boolean_arr.my_none?).to eql(false)
+    end
+  end
 end
