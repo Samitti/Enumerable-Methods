@@ -52,6 +52,16 @@ describe Enumerable do
       end
   end
 
+  describe "#my_any?" do
+    it "returns true if any element is true" do
+      expect(boolean_arr.my_any?).to eql(true)
+    end
+
+    it "returns false if none of the elements are true" do
+      expect(false_arr.my_any?).to eql(false)
+    end
+  end
+
   describe "#my_none?" do
     it "returns true if each element returns false" do
       expect(false_arr.my_none?).to eql(true)
@@ -61,4 +71,6 @@ describe Enumerable do
       expect(boolean_arr.my_none?).to eql(false)
     end
   end
+
+
 end
