@@ -87,6 +87,17 @@ describe Enumerable do
     end
   end
 
+  describe "#my_map" do
+    it "returns a new array with the results of running block once for every element" do
+      expect(str_arr.my_map{|item| item.size > 3 }).to eql([false, true, false])
+    end
+
+    it 'return enumerator if block is not given' do
+      expect(range.my_map).to be_an Enumerator
+    end
+
+  end
+
    
 
 
