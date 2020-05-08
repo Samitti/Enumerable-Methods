@@ -1,7 +1,6 @@
 require_relative '../my_enum.rb'
 
 describe Enumerable do
-  let(:my_enum) { Enumerable.new }
   let(:str_arr) { %w[ant bear cat] }
   let(:mix_arr) { [nil, true, 99] }
   let(:empty_arr) { [] }
@@ -40,6 +39,16 @@ describe Enumerable do
 
       it 'return enumerator if block is not given' do
         expect(boolean_arr.my_select).to be_an Enumerator
+      end
+  end
+
+  describe '#my_all?' do
+      it 'returns true if all elements true' do
+          expect(str_arr.my_all?(String)).to eql(true)
+      end
+
+      it 'returns false if any element is false' do
+          expect(mix_arr.my_all?(Integer)).to eql(false)
       end
   end
 end
