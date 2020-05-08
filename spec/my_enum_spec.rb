@@ -2,6 +2,7 @@ require_relative '../my_enum.rb'
 
 describe Enumerable do
   let(:str_arr) { %w[ant bear cat] }
+  let(:num_arr) {[1, 2, 4, 2]}
   let(:mix_arr) { [nil, true, 99] }
   let(:empty_arr) { [] }
   let(:range) { (1..5) }
@@ -71,6 +72,22 @@ describe Enumerable do
       expect(boolean_arr.my_none?).to eql(false)
     end
   end
+
+  describe "#my_count" do
+    it "returns the number of items if argument and block are not given" do
+      expect(num_arr.my_count).to eql(4)
+    end
+
+    it "returns the number of items that meet the criteria if an argument is given" do
+      expect(num_arr.my_count(2)).to eql(2)
+    end
+
+    it "counts the number of elements yielding a true value if block is given" do
+      expect(num_arr.my_count{|x| x%2 == 0}).to eql(3)
+    end
+  end
+
+   
 
 
 end
