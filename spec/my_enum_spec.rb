@@ -9,14 +9,12 @@ describe Enumerable do
   let(:nil_arr) { [nil] }
   let(:false_arr) { [nil, false] }
   let(:boolean_arr) { [nil, false, true] }
+  let(:result) {[]}
 
-  describe '#my_each' do
-    it 'returns the array itself' do
-      expect(str_arr.my_each { |item| item }).to eql(str_arr)
-    end
-
-    it 'returns a range itself' do
-      expect(range.my_each { |item| item }).to eql(range)
+  describe '#my_each' do    
+    it 'executes the block for each of the array’s elements if block given' do      
+      str_arr.my_each { |item| result << item + 'xx' }
+      expect(result).to eql(%w[antxx bearxx catxx])
     end
 
     it 'return enumerator if block is not given' do
