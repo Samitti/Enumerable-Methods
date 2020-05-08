@@ -95,10 +95,23 @@ describe Enumerable do
     it 'return enumerator if block is not given' do
       expect(range.my_map).to be_an Enumerator
     end
-
   end
 
+  describe "#my_inject" do
+    it "returns the final value of memo" do
+      expect(range.my_inject{|sum, n| sum + n}).to eql(15)
+    end
+
+    it "returns the final value of memo with symbol" do
+      expect(range.my_inject(:+)).to eql(15)
+    end
+
+    it "returns the final value of memo with initial value and symbol" do
+      expect(range.my_inject(1, :*)).to eql(120)
+    end
    
-
-
+    it "returns the longest word in array" do
+      expect(str_arr.my_inject{|memo, word| memo.length > word.length ? memo : word}).to eql("bear")
+    end
+  end
 end
