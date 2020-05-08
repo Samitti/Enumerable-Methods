@@ -14,6 +14,7 @@ module Enumerable
       end
       index += 1
     end
+    self
   end
 
   # my_each_with_index
