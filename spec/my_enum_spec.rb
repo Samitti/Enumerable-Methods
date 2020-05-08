@@ -29,7 +29,17 @@ describe Enumerable do
       end
 
       it 'return enumerator if block is not given' do
-        expect(range.my_each).to be_an Enumerator
+        expect(range.my_each_with_index).to be_an Enumerator
+      end
+  end
+
+  describe '#my_select' do
+      it 'selects items with certain criteria in the block' do
+        expect(boolean_arr.my_select { |item| item == true }).to eql([true])
+      end
+
+      it 'return enumerator if block is not given' do
+        expect(boolean_arr.my_select).to be_an Enumerator
       end
   end
 end
