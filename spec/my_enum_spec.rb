@@ -21,4 +21,15 @@ describe Enumerable do
       expect(range.my_each).to be_an Enumerator
     end
   end
+
+  describe '#my_each_with_index' do
+      it 'executes the block for each element with index value' do
+        str_arr.my_each_with_index { |item, index| result << item + index.to_s }
+        expect(result).to eql(%w[ant0 bear1 cat2])
+      end
+
+      it 'return enumerator if block is not given' do
+        expect(range.my_each).to be_an Enumerator
+      end
+  end
 end
